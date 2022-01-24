@@ -75,7 +75,7 @@ for entry in fishmarket:
     data.append(new_data)
 
 
-with open('fishmarket.csv', 'w') as fish_csv: #Fails if file is 
+with open('fishmarket.csv', 'w') as fish_csv: #Fails if file is open
     write = csv.writer(fish_csv)
       
     write.writerow(fields)
