@@ -1,8 +1,5 @@
 import boto3
-from pprint import pprint as pp
-import pandas as pd
 import csv
-import os
 
 s3_client = boto3.client("s3")
 s3_resource = boto3.resource("s3")
