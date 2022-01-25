@@ -1,6 +1,7 @@
 import boto3
 import csv
 from fish import fish
+from ec2_upload import upload
 
 s3_client = boto3.client("s3")
 s3_resource = boto3.resource("s3")
@@ -40,6 +41,8 @@ for f in fish_list:
             fishmarket will be a list of dictionaries
             could be done during writing of csv, but would be messy'''
     fishmarket.append(f.average())
+
+upload(fishmarket)
 
 fields = list(fishmarket[0].keys())
 data = []
