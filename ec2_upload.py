@@ -1,7 +1,7 @@
 import pymongo
 
 def upload(fish_list):
-    client = pymongo.MongoClient("mongodb://ubuntu@3.70.169.254", tls=True, tlsCAfile = 'C:/Users/Cameron/.ssh/DataStudents.pem')
+    client = pymongo.MongoClient()
     db = client['FishMarket']
     db.fish_info.drop()
     db.create_collection('fish_info')
