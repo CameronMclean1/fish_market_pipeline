@@ -1,5 +1,6 @@
 import boto3
 import csv
+from fish import fish
 
 s3_client = boto3.client("s3")
 s3_resource = boto3.resource("s3")
@@ -7,30 +8,6 @@ bucket_name = "data-eng-resources"
 
 bucket_name = "data-eng-resources"
 bucket_contents = s3_client.list_objects_v2(Bucket = bucket_name, Prefix = 'python/fish-market')
-
-class fish:
-    def __init__(self, entry):
-        self.species = entry['\ufeffSpecies']
-        self.stats = {}
-        print(type(self.stats))
-        for key in list(entry.keys()):
-            if key!='\ufeffSpecies':
-                self.stats[key] = [float(entry[key])]
-
-    def update(self, entry):
-        '''Add new entry to fish's stats'''
-        for key in list(entry.keys()):
-            if key!='\ufeffSpecies':
-                self.stats[key].append(float(entry[key]))
-
-    def average(self):
-        '''Returns the average stats for the fish'''
-        mean_fish = {}
-        mean_fish['Species'] = self.species
-        for key in list(self.stats.keys()):
-            if key!='\ufeffSpecies':
-                mean_fish[key] = sum(self.stats[key]) / len(self.stats[key])
-        return(mean_fish)
 
 fishmarket = []
 fish_list = []
@@ -49,6 +26,7 @@ for object in bucket_contents["Contents"]: #For each relevant file
     s3_object = s3_client.get_object(Bucket=bucket_name, Key=object['Key'])
     lines = s3_object['Body'].read().decode('utf-8').split()
     for row in csv.DictReader(lines): #For each entry in file
+        #print(row) #gathering for test
         active_fish = row['\ufeffSpecies']
         check = check_if_exists(active_fish) 
         if check==False:
